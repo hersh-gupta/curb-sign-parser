@@ -1,0 +1,103 @@
+[build-system]
+requires = ["setuptools>=45", "wheel", "setuptools-scm>=6.2"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "curb-sign-parser"
+version = "0.1.0"
+description = "Convert curb sign images to CDS-compliant JSON using multi-modal LLMs"
+readme = "README.md"
+requires-python = ">=3.8"
+license = "MIT"
+authors = [
+    { name = "Hersh Gupta", email = "h.v.gupta@outlook.com" },
+]
+keywords = ["parking", "curb", "signs", "computer vision", "llm"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Scientific/Engineering :: Image Recognition",
+]
+dependencies = [
+    "anthropic>=0.18.0",
+    "pillow>=10.0.0",
+    "pillow-heif>=0.15.0",
+    "piexif>=1.1.3",
+    "pydantic>=2.0.0",
+    "requests>=2.31.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "black>=23.0.0",
+    "isort>=5.0.0",
+    "mypy>=1.0.0",
+    "ruff>=0.1.0",
+]
+docs = [
+    "sphinx>=7.0.0",
+    "sphinx-rtd-theme>=1.0.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/hersh-gupta/curb-sign-parser"
+Repository = "https://github.com/hersh-gupta/curb-sign-parser.git"
+"Bug Tracker" = "https://github.com/hersh-gupta/curb-sign-parser/issues"
+
+[tool.setuptools]
+packages = ["curb_sign_parser"]
+
+[tool.setuptools.package-data]
+curb_sign_parser = ["py.typed"]
+
+[tool.black]
+line-length = 88
+target-version = ["py38"]
+include = '\.pyi?$'
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+line_length = 88
+
+[tool.mypy]
+python_version = "3.8"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+
+[tool.ruff]
+line-length = 88
+target-version = "py38"
+select = [
+    "E",  # pycodestyle errors
+    "W",  # pycodestyle warnings
+    "F",  # pyflakes
+    "I",  # isort
+    "C",  # flake8-comprehensions
+    "B",  # flake8-bugbear
+]
+ignore = ["E501"]  # Line too long (handled by black)
+
+[tool.pytest.ini_options]
+minversion = "7.0"
+addopts = "-ra -q --cov=curb_sign_parser"
+testpaths = [
+    "tests",
+]
+
+[tool.coverage.run]
+source = ["curb_sign_parser"]
+omit = [
+    "tests/*",
+    "setup.py",
+]
