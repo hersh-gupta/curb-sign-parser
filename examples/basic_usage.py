@@ -1,7 +1,8 @@
-from curb_sign_parser import CurbSignParser
 import json
-import os
 import logging
+import os
+
+from curb_sign_parser import CurbSignParser
 
 logging.basicConfig(level=logging.INFO)
 

@@ -3,14 +3,14 @@ Data models for the Curb Sign Parser following CDS standards.
 """
 
 from .data_models import (
-    RegulationType,
-    RateUnitPeriod,
-    Rate,
-    TimeSpan,
-    Rule,
     CurbPolicy,
     Location,
-    SignData
+    Rate,
+    RateUnitPeriod,
+    RegulationType,
+    Rule,
+    SignData,
+    TimeSpan,
 )
 
 __all__ = [

@@ -1,14 +1,16 @@
-import requests
-import logging
-from typing import Dict, Any
 import base64
+import logging
+from typing import Any, Dict
+
+import requests
+
 from .base import LLMProvider
 
 logger = logging.getLogger(__name__)
 
 class GPT4VisionProvider(LLMProvider):
     """GPT-4 Vision provider for multi-modal LLM processing."""
-    
+
     def __init__(
         self,
         api_key: str,
@@ -22,12 +24,12 @@ class GPT4VisionProvider(LLMProvider):
     @property
     def max_image_size(self) -> int:
         return 20 * 1024 * 1024  # 20MB
-        
+
     def process_image(self, image_data: bytes) -> Dict[str, Any]:
         """Process image using GPT-4 Vision API."""
         try:
             encoded_image = base64.b64encode(image_data).decode('utf-8')
-            
+
             headers = {
                 "Authorization": f"Bearer {self.api_key}",
                 "Content-Type": "application/json"
@@ -61,10 +63,10 @@ class GPT4VisionProvider(LLMProvider):
                 json=payload,
                 timeout=30
             )
-            
+
             response.raise_for_status()
             return response.json()["choices"][0]["message"]["content"]
-            
+
         except Exception as e:
             logger.error(f"GPT-4 Vision API error: {str(e)}")
             raise

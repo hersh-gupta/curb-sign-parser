@@ -1,9 +1,11 @@
 # data_models.py
-from typing import List, Optional, Dict, Any
-from enum import Enum
-from pydantic import BaseModel, Field
-from datetime import datetime
 import uuid
+from datetime import datetime
+from enum import Enum
+from typing import List, Optional
+
+from pydantic import BaseModel, Field
+
 
 class RegulationType(str, Enum):
     """Activity types following CDS standards"""
@@ -26,7 +28,7 @@ class Rate(BaseModel):
     rate: float
     rate_unit: str  # hour, day, etc.
     rate_unit_period: RateUnitPeriod
-    
+
 class TimeSpan(BaseModel):
     """CDS-compliant time span"""
     days_of_week: List[str]  # Changed from days to match CDS

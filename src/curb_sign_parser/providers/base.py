@@ -1,38 +1,37 @@
 from abc import ABC, abstractmethod
-from typing import Dict, Any, Optional
-import base64
-from pathlib import Path
+from typing import Any, Dict
+
 
 class LLMProvider(ABC):
     """Base class for multi-modal LLM providers."""
-    
+
     def __init__(self, api_key: str, **kwargs):
         self.api_key = api_key
         self.kwargs = kwargs
-        
+
     @abstractmethod
     def process_image(self, image_data: bytes) -> Dict[str, Any]:
         """
         Process an image and return structured parking rule data.
-        
+
         Args:
             image_data: Raw image bytes
-            
+
         Returns:
             dict: Structured parking rule data
         """
         pass
-        
+
     @property
     @abstractmethod
     def max_image_size(self) -> int:
         """Maximum allowed image size in bytes."""
         pass
-        
+
     @property
     def system_prompt(self) -> str:
         """System prompt for CDS-compliant parking sign analysis."""
-        return """Analyze this parking sign and return the regulations as a CDS-compliant JSON object. 
+        return """Analyze this parking sign and return the regulations as a CDS-compliant JSON object.
 
                 Example response format:
                 {

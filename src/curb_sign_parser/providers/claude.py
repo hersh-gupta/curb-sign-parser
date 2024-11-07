@@ -1,14 +1,15 @@
-import logging
-from typing import Dict, Any
 import base64
+import logging
+
 from anthropic import Anthropic
+
 from .base import LLMProvider
 
 logger = logging.getLogger(__name__)
 
 class ClaudeProvider(LLMProvider):
     """Claude provider for multi-modal LLM processing."""
-    
+
     def __init__(
         self,
         api_key: str,
@@ -22,13 +23,13 @@ class ClaudeProvider(LLMProvider):
     @property
     def max_image_size(self) -> int:
         return 5 * 1024 * 1024  # 5MB
-        
+
     def process_image(self, image_data: bytes) -> str:
         """Process image using Claude's API."""
         try:
             logger.info("Encoding image for Claude API")
             encoded_image = base64.b64encode(image_data).decode('utf-8')
-            
+
             logger.info("Sending request to Claude API")
             message = self.client.messages.create(
                 model=self.model,
@@ -54,11 +55,11 @@ class ClaudeProvider(LLMProvider):
                     }
                 ]
             )
-            
+
             response = message.content[0].text
             logger.info(f"Received response from Claude: {response[:500]}...")  # Log first 500 chars
             return response
-            
+
         except Exception as e:
             logger.error(f"Claude API error: {str(e)}", exc_info=True)
             raise
